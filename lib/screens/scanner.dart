@@ -44,7 +44,7 @@ class _ScannerPageState extends State<ScannerPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const NavBar(),
+      bottomNavigationBar:  const NavBar(),
     );
   }
 }

@@ -20,10 +20,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProductPage()),
-                );
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const ProductPage()), (route) => false);
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -37,7 +34,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const NavBar(),
+      bottomNavigationBar:  const NavBar(),
     );
   }
 }
