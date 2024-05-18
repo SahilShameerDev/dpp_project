@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/navbar.dart';
-import './product.dart'; // Ensure this path is correct
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
