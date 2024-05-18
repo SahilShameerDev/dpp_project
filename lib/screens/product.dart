@@ -17,6 +17,7 @@ class ProductPage extends StatelessWidget {
                   fontSize: 30,
                   fontStyle: FontStyle.italic,
                   color: Colors.red)),
+
         ],
       ),
     ),
