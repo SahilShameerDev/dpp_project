@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else {
-                    final jsonData = snapshot.data!;
+                    final List jsonData = snapshot.data!;
                     return ListView.builder(
                       itemCount: jsonData.length,
                       itemBuilder: (context, index) {

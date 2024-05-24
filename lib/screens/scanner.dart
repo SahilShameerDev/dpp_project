@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'dart:convert';
 import '../widgets/navbar.dart';
 
 class ScannerPage extends StatefulWidget {
@@ -11,6 +12,7 @@ class ScannerPage extends StatefulWidget {
 
 class _ScannerPageState extends State<ScannerPage> {
   String qrCodeResult = "Not Yet Scanned";
+  String endpointUrl = "No Endpoint URL";
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,8 @@ class _ScannerPageState extends State<ScannerPage> {
             const SizedBox(height: 20),
             Text("Scanned Result: $qrCodeResult"),
             const SizedBox(height: 20),
+            Text("Endpoint URL: $endpointUrl"),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 String qrCode = await FlutterBarcodeScanner.scanBarcode(
@@ -35,16 +39,32 @@ class _ScannerPageState extends State<ScannerPage> {
                   ScanMode.QR, // Scan mode
                 );
 
-                setState(() {
-                  qrCodeResult = qrCode; // Update the scanned result
-                });
+                if (qrCode != '-1') {
+                  String endpoint = getEndpointUrl(qrCode);
+                  setState(() {
+                    qrCodeResult = qrCode; // Update the scanned result
+                    endpointUrl = endpoint; // Update the endpoint URL
+                  });
+                }
               },
               child: const Text('Start QR Code Scan'),
             ),
           ],
         ),
       ),
-      bottomNavigationBar:  const NavBar(),
+      bottomNavigationBar: const NavBar(),
     );
+  }
+
+  String getEndpointUrl(String originalUrl) {
+    Uri uri = Uri.parse(originalUrl);
+    String? idForUrl = uri.queryParameters['idForUrl'];
+
+    if (idForUrl != null) {
+      String base64EncodedIdForUrl = base64Url.encode(utf8.encode(idForUrl)).replaceAll('=', '%3D');
+      return base64EncodedIdForUrl;
+    } else {
+      return 'Invalid URL';
+    }
   }
 }
